@@ -1,10 +1,10 @@
 <!-- <h1>hello</h1> -->
 <div class="card">
     <div class="card-header mx-6 ">
-        <h1 class="font-semibold text-2xl underline">Create Post</h1>
+        <h1 class="font-semibold text-2xl underline">Edit Post</h1>
     </div>
     <div class="card-body">
-        <form class="bg-white shadow-sm rounded px-8 pt-6 pb-8 mb-4" wire:submit.prevent="storePost">
+        <form class="bg-white shadow-sm rounded px-8 pt-6 pb-8 mb-4">
             <div class="mb-4">
                 <label class="block text-gray-700 text-md font-bold mb-2" for="title">
                     Title
@@ -24,9 +24,7 @@
                 @enderror
             </div>
             <div class="flex items-center justify-between">
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                    Save
-                </button>
+            <button wire:click.prevent="updatePost" class="bg-blue-400 rounded-md p-3">Update</button>
             </div>
         </form>
     </div>

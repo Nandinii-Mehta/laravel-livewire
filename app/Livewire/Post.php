@@ -2,17 +2,14 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Post as Posts;
+use Livewire\Component;
 
 class Post extends Component
 {
-
-    public $posts, $title, $description, $postId, $updatePost = false, $addPost = false;
-
-    // protected $listeners = [
-    //     'deletePostListener' => 'deletePost'
-    // ];
+    public $posts, $title, $description, $postId;
+    public $edit = false;
+    public $addPost = false;
 
     protected $rules = [
         'title' => 'required',
@@ -31,72 +28,62 @@ class Post extends Component
         return view('livewire.post');
     }
 
-    public function addPost()
+    //to return create page
+    public function createPost()
     {
         $this->resetFields();
         $this->addPost = true;
-        $this->updatePost = false;
+        $this->edit = false;
     }
 
+    //to store OR insert data that is submitted to form
     public function storePost()
     {
+
         $this->validate();
         try {
             Posts::create([
                 'title' => $this->title,
-                'description' => $this->description,
+                'description' => $this->description
             ]);
             session()->flash('success', 'Post Created Successfully!!');
-            $this->resetFields();
             $this->addPost = false;
         } catch (\Exception $ex) {
-            session()->flash('error', 'Something goes wrong');
+            session()->flash('error', 'Something goes wrong!!');
         }
     }
 
-    /**
-     * update the post data
-     * @return void
-     */
-    // public function updatePost()
-    // {
-    //     $this->validate();
-    //     try {
-    //         Posts::whereId($this->postId)->update([
-    //             'title' => $this->title,
-    //             'description' => $this->description
-    //         ]);
-    //         session()->flash('success', 'Post Updated Successfully!!');
-    //         $this->resetFields();
-    //         $this->updatePost = false;
-    //     } catch (\Exception $ex) {
-    //         session()->flash('success', 'Something goes wrong!!');
-    //     }
-    // }
-
-    /**
-     * Cancel Add/Edit form and redirect to post listing page
-     * @return void
-     */
-    public function cancelPost()
+    public function editPost($id)
     {
-        $this->addPost = false;
-        $this->updatePost = false;
-        $this->resetFields();
+        try {
+            $post = Posts::findOrFail($id);
+            if (!$post) {
+                session()->flash('error', 'Post not found');
+            } else {
+                $this->title = $post->title;
+                $this->description = $post->description;
+                $this->postId = $post->id;
+                $this->edit = true;
+                $this->addPost = false;
+            }
+        } catch (\Exception $ex) {
+            session()->flash('error', 'Something goes wrong!!');
+        }
     }
 
-    /**
-     * delete specific post data from the posts table
-     * @param mixed $id
-     * @return void
-     */
-    // public function deletePost($id)
-    // {
-    //     try {
-    //         Posts::find($id)->delete();
-    //         session()->flash('success', "Post Deleted Successfully!!");
-    //     } catch (\Exception $e) {
-    //         session()->flash('error', "Something goes wrong!!");
-    //     }
-    // }
+    public function updatePost()
+    {
+        $this->validate();
+        try {
+            Posts::whereId($this->postId)->update([
+                'title' => $this->title,
+                'description' => $this->description
+            ]);
+            session()->flash('success', 'Post Updated Successfully!!');
+            $this->resetFields();
+            $this->edit = false;
+        } catch (\Exception $ex) {
+            session()->flash('success', 'Something goes wrong!!');
+        }
+    }
 }

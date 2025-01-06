@@ -5,9 +5,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     @livewireStyles
 </head>
-<body>
-    @livewire('post')
-
+<body> 
+    
+   <livewire:post/>
+   
     @livewireScripts
 </body>
 </html>
