@@ -60,7 +60,7 @@
                 </td>
                 <td class="px-6 py-4">
                     <button wire:click="editPost({{$post->id}})" class="p-2 bg-blue-400 rounded-md text-white">Edit</button>
-                    <button onclick="" class="btn btn-danger btn-sm">Delete</button>
+                    <button  wire:click="deletePost({{$post->id}})" class="p-2 bg-red-400 rounded-md text-white">Delete</button>
                 </td>
             </tr>
             @endforeach

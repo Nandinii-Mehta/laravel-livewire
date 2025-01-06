@@ -86,4 +86,18 @@ class Post extends Component
             session()->flash('success', 'Something goes wrong!!');
         }
     }
+
+    public function cancelPost() {
+        $this->addPost = false;
+        $this->edit=false;
+        $this->resetFields();
+    }
+    public function deletePost($id){
+        try{
+            Posts::find($id)->delete();
+            session()->flash('success','Post Deleted Successfully');
+        }catch(\Exception $ex){
+            session()->flash('error','Something went wrong');
+        }
+    }
 }

@@ -4,7 +4,7 @@
         <h1 class="font-semibold text-2xl underline">Edit Post</h1>
     </div>
     <div class="card-body">
-        <form class="bg-white shadow-sm rounded px-8 pt-6 pb-8 mb-4">
+        <form class="bg-white shadow-sm rounded px-8 pt-6 pb-8 mb-4" wire:submit.prevent="updatePost">
             <div class="mb-4">
                 <label class="block text-gray-700 text-md font-bold mb-2" for="title">
                     Title
@@ -24,7 +24,7 @@
                 @enderror
             </div>
             <div class="flex items-center justify-between">
-            <button wire:click.prevent="updatePost" class="bg-blue-400 rounded-md p-3">Update</button>
+            <button  class="bg-blue-400 rounded-md p-3">Update</button>
             </div>
         </form>
     </div>
