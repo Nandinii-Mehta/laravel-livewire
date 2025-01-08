@@ -87,11 +87,6 @@ class Post extends Component
         }
     }
 
-    public function cancelPost() {
-        $this->addPost = false;
-        $this->edit=false;
-        $this->resetFields();
-    }
     public function deletePost($id){
         try{
             Posts::find($id)->delete();
